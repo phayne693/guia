@@ -1,0 +1,37 @@
+<%- include ('../../partials/header.ejs') %>
+<%- include ('../../partials/navbar.ejs') %>
+<div class="container grid justify-items-center border border-solid  preencher-body pb-4">
+    <div class="grid justify-stretch border border-solid mt-2 w-6/12  rounded-md">
+        <div class="">
+            <h2 class="text-2xl  p-2 border-solid border-b-2  border-gray-400">Categorias</h2>
+            <a href="/admin/categories/new">
+                <%- include ('../../components/button_cadastrar.ejs', { buttonText: 'Cadastrar categoria' }) %>
+            </a>
+            
+        </div>
+        <table class="mt-4">
+            <thead>
+                <tr>
+                    <th class="border border-gray-400">ID</th>
+                    <th class="border border-gray-400">TITÚLO</th>
+                    <th class="border border-gray-400">SLUG</th>
+                    <th class="border border-gray-400">AÇÕES</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% categories.forEach(category => {%>
+                    <tr>
+                        <th class="border border-gray-400"><%= category.id %></th>
+                        <th class="border border-gray-400"><%= category.title %></th>
+                        <th class="border border-gray-400"><%= category.slug %></th>
+                        <th class="border border-gray-400">
+                            <%- include ('../../components/button_editar.ejs', { text_button: 'Editar', category_id : category.id }) %>
+                            <%- include ('../../components/button_deletar.ejs', { text_button: 'Deletar', category_id : category.id }) %>
+                        </th>
+                    </tr>
+                <% }) %>
+            </tbody>
+        </table>
+    </div>
+</div>
+<%- include ('../../partials/footer.ejs') %>

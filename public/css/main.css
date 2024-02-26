@@ -1,0 +1,18 @@
+/* styles.css */
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+/* Seus estilos personalizados aqui */
+.custom-background {
+    background-color: red;
+ }
+ 
+ .custom-text {
+    color: teal;
+ }
+
+
+ .preencher-body {
+   max-width: 100%;
+ }

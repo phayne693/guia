@@ -1,6 +1,12 @@
 import bodyParser from 'body-parser';
 import express from 'express';
-import connection from './database/database.js'
+import connection from './database/database.js';
+//importando controladores
+import categoriesController from './categories/categoriesController.js';
+import articlesController from './articles/articlesController.js';
+//importando models
+import Category from './categories/categories.js';
+import Article from './articles/articles.js';
 
 //database
 connection.authenticate().then(() => {
@@ -8,6 +14,7 @@ connection.authenticate().then(() => {
 }).catch((error) =>{
     console.error(error)
 })
+
 
 const app = express();
 //view engine
@@ -17,6 +24,15 @@ app.use(bodyParser.urlencoded({extended:false}));
 app.use(bodyParser.json())
 //arquivos estaticos
 app.use(express.static('public'));
+
+
+//usando rota controller
+app.use('/', categoriesController)
+
+app.use('/', articlesController)
+
+
+
 
 app.get('/', (req, res) => {
     res.render('index');

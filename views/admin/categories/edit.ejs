@@ -1,0 +1,15 @@
+<%- include ('../../partials/header.ejs') %>
+<%- include ('../../partials/navbar.ejs') %>
+<div class="container grid justify-items-center border border-solid bg-white preencher-body pb-4">
+    <div class="grid justify-stretch border border-solid mt-2 w-6/12 bg-gray-100 rounded-md">
+        <div class="card-title bg-gray-100 border-b-2 border-gray-400">
+            <h2 class="text-xl p-2">Atualizar de categoria</h2>
+        </div>
+        <form method="POST" action="/categories/update" class="grid justify-stretch mt-4 p-2 shadow-xl">
+            <input type="hidden" name="id" value="<%= category.id %>">
+            <input type="text" name="title" placeholder="Defina o título da categoria" class="border rounded-md w-6/12 p-2 focus:outline-none focus:ring focus:ring-sky-100" value="<%= category.title %>"><br>
+            <button class="border border-solid border-sky-700 rounded-md bg-sky-700 hover:bg-sky-600 hover:border-sky-600 mt-2 w-3/12 p-2 text-white ">Atualizar</button>
+        </form>
+    </div>
+</div>
+<%- include ('../../partials/footer.ejs') %>
