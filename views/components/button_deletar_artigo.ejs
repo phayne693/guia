@@ -1,0 +1,17 @@
+<form action="/articles/delete" method="POST" class="inline-flex mb-2" onsubmit="confirm_delete(event, this)">
+    <input type="hidden" name="id" value="<%= article_id %>">
+    <button class="border border-solid border-red-700 rounded-md bg-red-700 hover:bg-red-600 hover:border-red-600 mt-2 w-15 p-2 text-white text-sm"><%= text_button %></button>
+</form>
+<script>
+    function confirm_delete(event, form){
+        event.preventDefault();
+        console.log('formulario não enviado')
+        let decision = confirm('Você deseja deletar esse artigo?');
+        if(decision){
+            form.submit();
+            console.log('Deletado')    
+        }else{
+            console.log('Não deletado')    
+        }
+    }
+</script>

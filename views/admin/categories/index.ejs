@@ -25,8 +25,8 @@
                         <th class="border border-gray-400"><%= category.title %></th>
                         <th class="border border-gray-400"><%= category.slug %></th>
                         <th class="border border-gray-400">
-                            <%- include ('../../components/button_editar.ejs', { text_button: 'Editar', category_id : category.id }) %>
-                            <%- include ('../../components/button_deletar.ejs', { text_button: 'Deletar', category_id : category.id }) %>
+                            <%- include ('../../components/button_editar_categoria.ejs', { text_button: 'Editar', category_id : category.id }) %>
+                            <%- include ('../../components/button_deletar_categoria.ejs', { text_button: 'Deletar', category_id : category.id }) %>
                         </th>
                     </tr>
                 <% }) %>

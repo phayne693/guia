@@ -10,7 +10,11 @@ export default {
     "./views/admin/articles/**/*.ejs"
   ],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        'custom-gray': '#999'
+      }
+    },
   },
   plugins: [],
 }

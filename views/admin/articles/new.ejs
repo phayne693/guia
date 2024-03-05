@@ -5,10 +5,64 @@
         <div class="card-title bg-gray-100 border-b-2 border-gray-400">
             <h2 class="text-xl p-2">Novo artigo</h2>
         </div>
-        <form method="POST" action="/categories/save" class="grid justify-stretch mt-4 p-2 shadow-xl">
-            <input type="text" name="title" placeholder="Defina o título da categoria" class="border rounded-md w-6/12 p-2 focus:outline-none focus:ring focus:ring-sky-100"><br>
-            <button class="border border-solid border-sky-700 rounded-md bg-sky-700 hover:bg-sky-600 hover:border-sky-600 mt-2 w-3/12 p-2 text-white ">Cadastrar</button>
+        <form method="POST" action="/articles/save" class="grid space-y-3 mt-4 p-4 shadow-xl">
+            <label for="">Defina o Título do artigo</label>
+            <input type="text" name="title" placeholder="Titulo do artigo" class="border rounded-md w-6/12 p-2 focus:outline-none focus:ring focus:ring-sky-100">
+            <textarea name="body" id="article" class="border rounded-md w-12/12 p-2 focus:outline-none focus:ring focus:ring-sky-100" cols="30" rows="10" placeholder="Escreva o artigo aqui!"></textarea>
+            <label for="">Categoria</label>
+            <select name="category" id="" class="border rounded-md w-12/12 p-2 focus:outline-none focus:ring focus:ring-sky-100 bg-white" aria-placeholder="teste">
+                <option value="" disabled selected hidden>Selecione a categoria</option>
+                <% categories.forEach((category) =>{ %>
+                    <option value="<%= category.id %>"><%= category.title %></option>
+                <% }) %>
+            </select> 
+            <button class="border border-solid border-sky-700 rounded-md bg-sky-700 hover:bg-sky-600 hover:border-sky-600  w-3/12 p-2 text-white ">Cadastrar</button>
         </form>
     </div>
 </div>
 <%- include ('../../partials/footer.ejs') %>
+<script src="/tinymce/tinymce.min.js"></script>
+<script>
+    tinymce.init({
+        selector: "textarea",
+        plugins:
+        'advlist autolink link image lists print preview hr searchreplace wordcount fullscreen insertdatetime media save table paste emoticons',
+        language: 'pt_BR'
+    })
+</script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const form = document.querySelector('form');
+
+        form.addEventListener('submit', function(event) {
+            const title = document.querySelector('input[name="title"]');
+            const body = document.querySelector('textarea[name="body"]');
+            const category = document.querySelector('select[name="category"]');
+
+
+            if (!title.value) {
+                title.classList.add('border-red-500'); // Adiciona classe para borda vermelha
+            } else {
+                title.classList.remove('border-red-500'); // Remove classe de borda vermelha se o campo for preenchido
+            }
+
+            if (!body.value) {
+                body.classList.add('border-red-500'); // Adiciona classe para borda vermelha
+            } else {
+                body.classList.remove('border-red-500'); // Remove classe de borda vermelha se o campo for preenchido
+            }
+
+            if (!category.value || category.value === '') {
+                category.classList.add('border-red-500'); // Adiciona classe para borda vermelha
+            } else {
+                category.classList.remove('border-red-500'); // Remove classe de borda vermelha se o campo for preenchido
+            }
+
+            if (!title.value || !body.value || !category.value || category.value === '') {
+                event.preventDefault(); // Impede o envio do formulário se algum campo estiver vazio
+                alert('Por favor, preencha todos os campos antes de enviar o formulário.');
+            }
+            
+        });
+    });
+</script>
