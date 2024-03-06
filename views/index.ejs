@@ -1,6 +1,45 @@
 <%- include ('partials/header.ejs') %>
 <%- include ('partials/navbar.ejs') %>
-<body>
-    <h1 class="bg-stone-900 text-red-500">Ola</h1>
+<body class="bg-gray-100">
+    <div class="bg-gray-950 pt-32 pb-20">
+        <div class="container mx-auto text-center">
+            <h1 class="text-4xl font-bold text-white">Bem vindo ao Blog para Devs</h1>
+            <p class="mt-4 text-lg text-gray-300">Uma plataforma incrível para descobrir e compartilhar conhecimentos.</p>
+        </div>
+    </div>
+    <div class="container mx-auto py-8">
+        <div class="bg-white shadow-md rounded-lg">
+            <div class="bg-gray-100 px-4 py-2 border-b">
+                <h2 class="text-xl font-semibold text-gray-800">Busque por Categorias</h2>
+            </div>
+            <div class="divide-x divide-gray-200 flex flex-nowrap overflow-x-auto">
+                <% categories.forEach(categorie => { %>
+                    <div class="p-4 hover:bg-gray-50 transition duration-300 whitespace-nowrap">
+                        <h3 class="text-lg font-semibold text-gray-900"><%= categorie.title %></h3>
+                        <!-- <a href="/<%= categorie.slug %>" class="text-blue-600 hover:underline mt-2 block">Ver mais</a> -->
+                    </div>
+                <% }) %>
+            </div>
+        </div>
+    </div>
+    <div class="container mx-auto py-8">
+        <div class="bg-white shadow-md rounded-lg overflow-hidden">
+            <div class="bg-gray-100 px-4 py-2 border-b">
+                <h2 class="text-xl font-semibold text-gray-800">Principais Artigos</h2>
+            </div>
+            <div class="divide-y divide-gray-200">
+                <% articles.forEach(article => { %>
+                    <div class="p-4 hover:bg-gray-50 transition duration-300">
+                        <h3 class="text-lg font-semibold text-gray-900"><%= article.title %></h3>
+                        <div class="text-container">
+                            <p class="text-gray-600 mt-2"><%- article.body %>...</p>
+                        </div>
+                        <a href="/<%= article.slug %>" class="text-blue-600 hover:underline mt-2 block">Ver mais</a>
+                    </div>
+                <% }) %>
+            </div>
+        </div>
+    </div>
 </body>
 <%- include ('partials/footer.ejs') %>
+<script src="/scripts/menus_active.js"></script>

@@ -7,6 +7,7 @@ import articlesController from './articles/articlesController.js';
 //importando models
 import Category from './categories/categories.js';
 import Article from './articles/articles.js';
+import { Sequelize } from 'sequelize';
 
 //database
 connection.authenticate().then(() => {
@@ -33,11 +34,47 @@ app.use('/', articlesController)
 
 
 
-
+//trax os artigos par page home
 app.get('/', (req, res) => {
-    res.render('index');
-})
+    Article.findAll({
+        where: {
+            title: {
+                [Sequelize.Op.not]: null // Verifica se o título não é nulo
+            },
+            body: {
+                [Sequelize.Op.not]: null // Verifica se o corpo não é nulo
+            },
+            categoryId: {
+                [Sequelize.Op.not]: null // Verifica se a categoria não é nula
+            }
+        },
+        order: [
+            ['id', 'DESC']
+        ]
+    }).then(articles => {
+        Category.findAll().then(categories => {
+            res.render('index', {articles:articles, categories:categories});
+        });
+    });
+});
 
+//pagina de leitura
+app.get('/:slug', (req,res) => {
+    let slug = req.params.slug;
+    Article.findOne({
+        where:{
+            slug: slug
+        }
+    }).then( article => {
+        if(article != undefined){
+            res.render('article', {article: article})
+        }else{
+            res.redirect('/')
+        }
+    }).catch(err => {
+        res.redirect('/')
+    })
+});
 
 app.listen(8090, () => {
     console.log("Servidor rodando na porta 8090")

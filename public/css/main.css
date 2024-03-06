@@ -16,3 +16,17 @@
  .preencher-body {
    max-width: 100%;
  }
+
+ .text-container {
+   max-height: 3em; /* Ajuste conforme necessário */
+   overflow: hidden;
+   text-overflow: ellipsis;
+   display: -webkit-box;
+   -webkit-line-clamp: 1; /* Número de linhas para exibir antes de cortar */
+   -webkit-box-orient: vertical;
+}
+
+.menu-active{
+   text-decoration-color: gray;
+   background-color: #374151;
+}
