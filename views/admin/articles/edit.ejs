@@ -1,0 +1,79 @@
+<%- include ('../../partials/header.ejs') %>
+<%- include ('../../partials/navbar.ejs') %>
+<div class="container grid justify-items-center border border-solid bg-white preencher-body pb-4">
+    <div class="grid justify-stretch border border-solid mt-2 w-6/12 bg-gray-100 rounded-md">
+        <div class="card-title bg-gray-100 border-b-2 border-gray-400">
+            <h2 class="text-xl p-2">Atualizar Artigo</h2>
+        </div>
+        <form method="POST" action="/articles/update" class="grid space-y-3 mt-4 p-4 shadow-xl">
+            <input type="hidden" name="id" value="<%= article.id %>">
+            <input type="text" name="title" placeholder="Defina o título da categoria" class="border rounded-md w-6/12 p-2 focus:outline-none focus:ring focus:ring-sky-100" value="<%= article.title %>"><br>
+            <textarea name="body" id="article" class="border rounded-md w-12/12 p-2 focus:outline-none focus:ring focus:ring-sky-100"><%- article.body %></textarea>
+            <select name="category" id="" class="border rounded-md w-12/12 p-2 focus:outline-none focus:ring focus:ring-sky-100 bg-white" aria-placeholder="teste">
+                <option value="" disabled selected hidden>Selecione a categoria</option>
+                <% categories.forEach((category) =>{ %>
+                    <% if(category.id === article.categoryId){%>
+                        <option value="<%= category.id %>" selected><%= category.title %></option>
+                    <%}else{%>
+                        <option value="<%= category.id %>"><%= category.title %></option>
+                    <%} %>
+                <% }) %>
+            </select> 
+            <button class="border border-solid border-sky-700 rounded-md bg-sky-700 hover:bg-sky-600 hover:border-sky-600 mt-2 w-3/12 p-2 text-white ">Atualizar</button>
+        </form>
+    </div>
+</div>
+<!--Outra maneira de trazer o conteudo para o textarea com o tiny-->
+<!-- <div id="content" style="display: none;">
+    
+</div> -->
+<%- include ('../../partials/footer.ejs') %>
+<script src="/tinymce/tinymce.min.js"></script>
+<script>
+    tinymce.init({
+        selector: "textarea",
+        plugins:
+        'advlist autolink link image lists print preview hr searchreplace wordcount fullscreen insertdatetime media save table paste emoticons',
+        language: 'pt_BR',
+        //usando o tiny
+        //init_instance_callback: () =>{
+        //    tinymce.get('article').setContent($('#content').html())
+        //}
+    })
+</script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const form = document.querySelector('form');
+
+        form.addEventListener('submit', function(event) {
+            const title = document.querySelector('input[name="title"]');
+            const body = document.querySelector('textarea[name="body"]');
+            const category = document.querySelector('select[name="category"]');
+
+
+            if (!title.value) {
+                title.classList.add('border-red-500'); // Adiciona classe para borda vermelha
+            } else {
+                title.classList.remove('border-red-500'); // Remove classe de borda vermelha se o campo for preenchido
+            }
+
+            if (!body.value) {
+                body.classList.add('border-red-500'); // Adiciona classe para borda vermelha
+            } else {
+                body.classList.remove('border-red-500'); // Remove classe de borda vermelha se o campo for preenchido
+            }
+
+            if (!category.value || category.value === '') {
+                category.classList.add('border-red-500'); // Adiciona classe para borda vermelha
+            } else {
+                category.classList.remove('border-red-500'); // Remove classe de borda vermelha se o campo for preenchido
+            }
+
+            if (!title.value || !body.value || !category.value || category.value === '') {
+                event.preventDefault(); // Impede o envio do formulário se algum campo estiver vazio
+                alert('Por favor, preencha todos os campos antes de enviar o formulário.');
+            }
+            
+        });
+    });
+</script>

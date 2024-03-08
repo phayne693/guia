@@ -10,18 +10,28 @@
     <div class="container mx-auto py-8">
         <div class="bg-white shadow-md rounded-lg">
             <div class="bg-gray-100 px-4 py-2 border-b">
-                <h2 class="text-xl font-semibold text-gray-800">Busque por Categorias</h2>
+                <h2 class="text-xl font-semibold text-gray-800">Buscar por Categorias</h2>
             </div>
             <div class="divide-x divide-gray-200 flex flex-nowrap overflow-x-auto">
                 <% categories.forEach(categorie => { %>
                     <div class="p-4 hover:bg-gray-50 transition duration-300 whitespace-nowrap">
-                        <h3 class="text-lg font-semibold text-gray-900"><%= categorie.title %></h3>
-                        <!-- <a href="/<%= categorie.slug %>" class="text-blue-600 hover:underline mt-2 block">Ver mais</a> -->
+                        <a href="/category/<%= categorie.slug %>"><h3 class="text-lg font-semibold text-gray-900"><%= categorie.title %></h3></a>
                     </div>
                 <% }) %>
             </div>
         </div>
     </div>
+    <!-- <div class="container mx-auto py-8">
+        <div class="bg-white shadow-md rounded-lg">
+            <div class="bg-gray-100 px-4 py-2 border-b">
+                <h2 class="text-xl font-semibold text-gray-800">Pesquisar</h2>
+            </div>
+            <form action="/searchbar" method="GET" class="divide-x divide-gray-200 flex">
+                <input type="text" name="query" placeholder="Digite para pesquisar..." class="w-full py-2 px-4 rounded-lg">
+                <button type="submit">Buscar</button>
+            </form>
+        </div>
+    </div> -->
     <div class="container mx-auto py-8">
         <div class="bg-white shadow-md rounded-lg overflow-hidden">
             <div class="bg-gray-100 px-4 py-2 border-b">

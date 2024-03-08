@@ -76,6 +76,51 @@ app.get('/:slug', (req,res) => {
     })
 });
 
+//buscar por categoria
+app.get('/category/:slug', (req,res) =>{
+    let slug  = req.params.slug;
+
+    Category.findOne({
+        where:{
+            slug: slug
+        },
+        include:[{model: Article}]
+    }).then(category => {
+        if(category != undefined){
+            Category.findAll().then(categories => {
+                res.render("index", {articles : category.articles, categories: categories})
+            })
+        }else{
+            res.redirect("/")
+        }
+    }).catch(err => {
+        res.redirect('/')
+    })
+
+})
+
+
+// //buscar por barra de pesquisa
+// app.get('/searchbar', async (req, res) => {
+//     const query = req.query.query; // Obtém o termo de pesquisa da query string
+//     console.log(query)
+//     try {
+//         // Consulta para buscar artigos com base na pesquisa
+//         const articles = await Article.findAll({
+//             where: {
+//                 title: {[Sequelize.Op.like] : "%" + query + "%"}
+//             }
+//         }).then(res.render('test', { articles }))
+//         // console.log('Artigos encontrados:', articles);
+        
+//     } catch (error) {
+//         console.error(error);
+//         res.status(500).send('Erro ao buscar artigos.');
+//     }
+// });
+
+
+
 app.listen(8090, () => {
     console.log("Servidor rodando na porta 8090")
 })
