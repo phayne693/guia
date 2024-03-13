@@ -111,4 +111,50 @@ router.post("/articles/update", (req, res) => {
 })
 
 
+//paginacao
+router.get('/articles/page/:num', (req, res,) =>{
+    let page = req.params.num
+    //offset serve para mostrar o conteudo em tela
+    let offset = 0
+
+    if(isNaN(page) || page == 1){
+        offset = 0
+    }else{
+        //aqui multiplicamos o valor pela quantiddade de itens que queremos mostrar por tela
+        offset = parseInt(page * 4)
+    }
+
+    //acha os artigos e faz a contaemg
+    Article.findAndCountAll({
+        //limite de itens por pagina
+        limit: 4,
+        offset: offset,
+        order:[['id','DESC']]
+    }).then( articles => {
+
+        //logica para definir se ainda existe pafinas com conteudos
+        let next;
+        //fazer a soma do offset mais a qtd de artigos por pag e verificar se e 
+        //maior ou igual a qtd de artigos restantes
+        //se for next não existe se não existe
+        if(offset + 4 >= articles.count){
+            next = false;
+        }else{
+            next = true;
+        }
+
+        let result = {
+            page: parseInt(page),
+            next: next,
+            articles : articles
+        }
+
+        Category.findAll().then(categories =>{
+            //como estamos trazendo a lista de arigos dentro de resultts devemos passar a variavel para view
+            res.render('admin/articles/page', {result: result, categories: categories})
+        })
+        // res.json(result)
+    })
+})
+
 export default router;

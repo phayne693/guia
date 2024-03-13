@@ -1,5 +1,5 @@
-<%- include ('partials/header.ejs') %>
-<%- include ('partials/navbar.ejs') %>
+<%- include ('../../partials/header.ejs') %>
+<%- include ('../../partials/navbar.ejs') %>
 <body class="bg-gray-100">
     <div class="bg-gray-950 pt-32 pb-20">
         <div class="container mx-auto text-center">
@@ -38,7 +38,8 @@
                 <h2 class="text-xl font-semibold text-gray-800">Principais Artigos</h2>
             </div>
             <div class="divide-y divide-gray-200">
-                <% articles.forEach(article => { %>
+                <!-- aqui adicionamos a variavel result e as rows para que possa encontrar os artigos corretamente-->
+                <% result.articles.rows.forEach(article => { %>
                     <div class="p-4 hover:bg-gray-50 transition duration-300">
                         <h3 class="text-lg font-semibold text-gray-900"><%= article.title %></h3>
                         <div class="text-container">
@@ -49,14 +50,38 @@
                 <% }) %>
             </div>
         </div>
-        <div class="divide-y divide-gray-200">
-            <a href="/articles/page/2" class="text-blue-600 hover:underline mt-2 block">
-                <div class="p-4 hover:bg-gray-50 transition duration-300 bg-white shadow-md rounded-lg mt-2 mb-2 flex float-right">Next
-                </div>
-            </a>
-        </div>
-    </div>
+        <div class="">
+            <div class="divide-y divide-gray-200">
+                <% if(result.page > 2) {%>
+                    <a href="/articles/page/<%= result.page - 1 %>" class="text-blue-600 hover:underline mt-2 block">
+                        <div class="p-4 hover:bg-gray-50 transition duration-300 bg-white shadow-md rounded-lg mt-2 flex float-left mb-2">Prev
+                        </div>
+                    </a>
+                <% }else if(result.page == 2){%>
+                    <a href="/" class="text-blue-600 hover:underline mt-2 block">
+                        <div class="p-4 hover:bg-gray-50 transition duration-300 bg-white shadow-md rounded-lg mt-2 flex float-left mb-2">Prev
+                        </div>
+                    </a>
+                <% }%>
 
+            </div>
+            <div class="divide-y divide-gray-200">
+                <% if(result.next) {%>
+                    <a href="/articles/page/<%= result.page + 1 %>" class="text-blue-600 hover:underline mt-2 block">
+                        <div class="p-4 hover:bg-gray-50 transition duration-300 bg-white shadow-md rounded-lg mt-2 flex float-right mb-2">Next
+                        </div>
+                    </a>
+                <% }else{%>
+                    <a  class="text-gray-700 hover:underline mt-2 block pointer-events-none opacity-50 cursor-not-allowed" disabled>
+                        <div class="p-4 hover:bg-gray-50 transition duration-300 bg-white shadow-md rounded-lg mt-2 flex float-right mb-2">Next
+                        </div>
+                    </a>
+                <% } %>
+
+            </div>
+        </div>
+
+    </div>
 </body>
-<%- include ('partials/footer.ejs') %>
+<%- include ('../../partials/footer.ejs') %>
 <script src="/scripts/menus_active.js"></script>
