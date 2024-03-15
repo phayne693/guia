@@ -3,10 +3,12 @@ import express from 'express';
 import connection from './database/database.js';
 //importando controladores
 import categoriesController from './categories/categoriesController.js';
-import articlesController from './articles/articlesController.js';
+import ArticlesController from './articles/articlesController.js';
+import UsersController from './user/UsersController.js';
 //importando models
 import Category from './categories/categories.js';
 import Article from './articles/articles.js';
+import User from './user/user.js';
 import { Sequelize } from 'sequelize';
 
 //database
@@ -29,8 +31,8 @@ app.use(express.static('public'));
 
 //usando rota controller
 app.use('/', categoriesController)
-
-app.use('/', articlesController)
+app.use('/', ArticlesController)
+app.use('/', UsersController)
 
 
 

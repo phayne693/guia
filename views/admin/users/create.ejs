@@ -1,0 +1,60 @@
+<%- include ('../../partials/header.ejs') %>
+<%- include ('../../partials/navbar.ejs') %>
+<body class="bg-gray-100 ">
+    <div class="container mx-auto py-8 mt-16 w-6/12">
+        <div class="bg-white shadow-md rounded-lg overflow-hidden">
+            <div class="bg-gray-100 px-4 py-2 border-b">
+                <h2 class="text-xl font-semibold text-gray-800">Cadastrar usuários</h2>
+            </div>
+            <div class="divide-y divide-gray-200">
+                <form method="POST" action="/users/createnew" class="grid space-y-3 mt-4 p-4 shadow-xl" id="form">
+                    <label for="">Email</label>
+                    <input type="text" name="email" placeholder="Email" class="border rounded-md  p-2 focus:outline-none focus:ring focus:ring-sky-100">
+                    <!-- Adicionei um id ao input de email para referenciar posteriormente -->
+                    <div id="mensagem-erro-icon" style="display: none;" class="flex ml-2">
+                        <i class="fa-solid fa-circle-exclamation" style="color: #f70202;"></i>
+                        <label id="mensagem-erro"  class="text-red-600 w-6/12 ml-3 text-sm"></label>
+                    </div>
+                    <label for="">Password</label>
+                    <input type="password" name="password" class="border rounded-md  p-2 focus:outline-none focus:ring focus:ring-sky-100" placeholder="Password">
+                    <button class="border border-solid border-sky-700 rounded-md bg-sky-700 hover:bg-sky-600 hover:border-sky-600  w-3/12 p-2 text-white ">Cadastrar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+<%- include ('../../partials/footer.ejs') %>
+<script src="/scripts/menus_active.js"></script>
+<script>
+    document.getElementById('form').addEventListener('submit', function(event) {
+        event.preventDefault();
+        
+        // Obter os valores dos campos de email e senha do formulário
+        const email = document.querySelector('input[name="email"]').value;
+        const password = document.querySelector('input[name="password"]').value;
+
+        // Enviar uma requisição POST para o endpoint do servidor
+        fetch('/users/createnew', {
+            method: 'POST',
+            body: JSON.stringify({ email, password }),
+            headers: { 'Content-Type': 'application/json' },
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.error) {
+                // Se houver um erro, exibir a mensagem de erro na tela
+                const mensagemErro = document.getElementById('mensagem-erro');
+                mensagemErro.style.display = 'inline-block'; // Tornar o label visível
+                mensagemErro.textContent = data.error; // Exibir a mensagem de erro
+                //mostrar icone
+                const iconeErro = document.getElementById('mensagem-erro-icon');
+                iconeErro.style.display = 'inline-block'; // Tornar o label visível
+            } else {
+                alert('Usuário cadastrado com sucesso!');
+            }
+        })
+        .catch(error => {
+            console.error('Erro:', error);
+        });
+    });
+</script>

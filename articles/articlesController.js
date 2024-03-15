@@ -121,7 +121,7 @@ router.get('/articles/page/:num', (req, res,) =>{
         offset = 0
     }else{
         //aqui multiplicamos o valor pela quantiddade de itens que queremos mostrar por tela
-        offset = parseInt(page * 4)
+        offset = (parseInt(page - 1) * 4)
     }
 
     //acha os artigos e faz a contaemg
