@@ -17,7 +17,8 @@ router.get('/admin/users/create', (req, res) => {
 router.post('/users/createnew', (req,res) => {
     let email = req.body.email
     let password = req.body.password
-
+    let name = req.body.name
+    let admin = req.body.admin
 
     //validar email repetido
     User.findOne({
@@ -32,9 +33,11 @@ router.post('/users/createnew', (req,res) => {
 
             User.create({
                 email : email,
-                password : hash
+                password : hash,
+                name: name,
+                admin : admin
             }).then(() =>{
-                res.redirect('/')
+                res.json({email, password, name, admin})
             }).catch((err) =>{
                 res.send(err)
             });

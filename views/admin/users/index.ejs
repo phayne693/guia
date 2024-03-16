@@ -1,40 +1,44 @@
 <%- include ('../../partials/header.ejs') %>
 <%- include ('../../partials/navbar.ejs') %>
-<div class="container grid justify-items-center border border-solid  preencher-body pb-4">
-    <div class="grid justify-stretch border border-solid mt-2 w-6/12  rounded-md">
-        <div class="">
-            <h2 class="text-2xl  p-2 border-solid border-b-2  border-gray-400">Usuários</h2>
-            <a href="/admin/users/create">
-                <%- include ('../../components/button_cadastrar.ejs', { buttonText: 'Cadastrar usuários' }) %>
-            </a>
-            
+<body class="bg-gray-100">
+    <div class="container mx-auto py-8 mt-16">
+        <div class="bg-white shadow-md rounded-md">
+            <div class="bg-gray-100 py-2 px-4 border-b border-gray-400">
+                <h2 class="text-2xl font-semibold text-gray-800 border-b-2 border-gray-400">Todos Usuários</h2>
+                <a href="/admin/users/create" class="mt-2 -ml-2">
+                    <%- include ('../../components/button_cadastrar.ejs', { buttonText: 'Cadastrar usuários' }) %>
+                </a>
+            </div>
+            <div class="overflow-x-auto">
+                <table class="w-full border-collapse border border-gray-400">
+                    <thead>
+                        <tr class="bg-gray-200">
+                            <th class="border border-gray-400 px-4 py-2">ID</th>
+                            <th class="border border-gray-400 px-4 py-2">NOME</th>
+                            <th class="border border-gray-400 px-4 py-2">EMAIL</th>
+                            <th class="border border-gray-400 px-4 py-2">PERMISSÃO</th>
+                            <th class="border border-gray-400 px-4 py-2">AÇÕES</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% user.forEach(user => { %>
+                            <tr>
+                                <td class="border border-gray-400 px-4 py-2 text-center"><%= user.id %></td>
+                                <td class="border border-gray-400 px-4 py-2 text-center"><%= user.name %></td>
+                                <td class="border border-gray-400 px-4 py-2 text-center"><%= user.email %></td>
+                                <td class="border border-gray-400 px-4 py-2 text-center"><%= user.permission %></td>
+                                <td class="border border-gray-400 px-4 py-2 text-center">
+                                    <%- include ('../../components/button_editar_usuario.ejs', { text_button: 'Editar', user_id: user.id }) %>
+                                    <%- include ('../../components/button_deletar_usuario.ejs', { text_button: 'Deletar', user_id: user.id }) %>
+                                </td>
+                            </tr>
+                        <% }) %>
+                    </tbody>
+                </table>
+            </div>
         </div>
-        <table class="mt-4">
-            <thead>
-                <tr>
-                    <th class="border border-gray-400">ID</th>
-                    <th class="border border-gray-400">NOME</th>
-                    <th class="border border-gray-400">EMAIL</th>
-                    <th class="border border-gray-400">PERMISSÃO</th>
-                    <th class="border border-gray-400">AÇÕES</th>
-                </tr>
-            </thead>
-            <tbody>
-                <% user.forEach(user =>{ %>
-                    <tr class="content-center">
-                        <td class="border border-gray-400 text-center"><%= user.id %></td>
-                        <td class="border border-gray-400 text-center"><%= user.name %></td>
-                        <td class="border border-gray-400 text-center"><%= user.email %></td>
-                        <td class="border border-gray-400 text-center"><%= user.admin%></td>
-                        <td class="border border-gray-400 text-center">
-                            <%- include ('../../components/button_editar_usuario.ejs', { text_button: 'Editar', user_id : user.id }) %>
-                            <%- include ('../../components/button_deletar_usuario.ejs', { text_button: 'Deletar', user_id : user.id }) %>
-                        </td>
-                    </tr>
-                <% }) %>
-            </tbody>
-        </table>
     </div>
-</div>
+</body>
+
 <%- include ('../../partials/footer.ejs') %>
 <script src="/scripts/menus_active.js"></script>

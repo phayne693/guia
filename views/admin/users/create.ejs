@@ -8,6 +8,8 @@
             </div>
             <div class="divide-y divide-gray-200">
                 <form method="POST" action="/users/createnew" class="grid space-y-3 mt-4 p-4 shadow-xl" id="form">
+                    <label for="">Nome</label>
+                    <input type="text" name="name" placeholder="Nome" class="border rounded-md  p-2 focus:outline-none focus:ring focus:ring-sky-100">
                     <label for="">Email</label>
                     <input type="text" name="email" placeholder="Email" class="border rounded-md  p-2 focus:outline-none focus:ring focus:ring-sky-100">
                     <!-- Adicionei um id ao input de email para referenciar posteriormente -->
@@ -17,6 +19,11 @@
                     </div>
                     <label for="">Password</label>
                     <input type="password" name="password" class="border rounded-md  p-2 focus:outline-none focus:ring focus:ring-sky-100" placeholder="Password">
+                    <label for="">Administrador</label>
+                    <select name="admin" id="admin" class="border rounded-md  p-2 focus:outline-none focus:ring focus:ring-sky-100">
+                        <option value="true">Sim</option>
+                        <option value="false">Não</option>
+                    </select>
                     <button class="border border-solid border-sky-700 rounded-md bg-sky-700 hover:bg-sky-600 hover:border-sky-600  w-3/12 p-2 text-white ">Cadastrar</button>
                 </form>
             </div>
@@ -32,11 +39,13 @@
         // Obter os valores dos campos de email e senha do formulário
         const email = document.querySelector('input[name="email"]').value;
         const password = document.querySelector('input[name="password"]').value;
+        const name = document.querySelector('input[name="name"]').value;
+        const admin = document.querySelector('select[name="admin"]').value;
 
         // Enviar uma requisição POST para o endpoint do servidor
         fetch('/users/createnew', {
             method: 'POST',
-            body: JSON.stringify({ email, password }),
+            body: JSON.stringify({ email, password, name, admin}),
             headers: { 'Content-Type': 'application/json' },
         })
         .then(response => response.json())
