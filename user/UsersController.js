@@ -36,7 +36,7 @@ router.post('/users/createnew', (req,res) => {
             }).then(() =>{
                 res.redirect('/')
             }).catch((err) =>{
-                res.send('AQUI')
+                res.send(err)
             });
         }else{
             res.status(400).json({error: 'Email já cadastrado!'})
@@ -45,6 +45,31 @@ router.post('/users/createnew', (req,res) => {
 });
 
 
+//listar usuarios
+router.get('/users', (req, res) => {
 
+    User.findAll().then(user => {
+        res.render('admin/users/index', {user: user})
+    });
+});
+
+//deletar usuarios
+router.post('/users/delete' ,(req,res) => {
+    let id= req.body.id;
+
+    if(!isNaN(id)){
+        User.destroy({
+            where:{
+                id:id
+            }
+        }).then(() =>{
+            res.redirect('/users')
+        }).catch((err) =>{
+            res.send(err)
+        });
+    }else{
+        res.send('Error')
+    }
+});
 
 export default router;
