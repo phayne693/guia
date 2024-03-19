@@ -75,4 +75,40 @@ router.post('/users/delete' ,(req,res) => {
     }
 });
 
+//login
+router.get('/login', (req, res) => {
+    res.render('admin/users/login');
+});
+
+//autenticacao
+router.post('/authenticate' ,(req, res) => {
+    let email = req.body.email
+    let password = req.body.password
+
+    //realizar busca do usuario
+    User.findOne({
+        where: {'email': email}
+    }).then(user => {
+        if(user){//se existir usuario com email
+            //validar senha
+            let pass_correct = bcryptjs.compareSync(password, user.password);
+            //se as senhas forem iguais
+            if(pass_correct){
+                //cria a sessão do usuario
+                req.session.userId = {
+                    id: user.id,
+                    email: user.email
+                };
+            }else{
+                res.status(401).json({error: 'Senha incorreta'})
+            }
+        }else{
+            res.status(404).json({error: 'Email não encontrado'})
+        }
+    }).catch(err => {
+        res.status(500).json({error: err})
+    })
+})
+
+
 export default router;

@@ -10,6 +10,11 @@ import Category from './categories/categories.js';
 import Article from './articles/articles.js';
 import User from './user/user.js';
 import { Sequelize } from 'sequelize';
+//session
+import session from 'express-session';
+
+
+
 
 //database
 connection.authenticate().then(() => {
@@ -28,12 +33,34 @@ app.use(bodyParser.json())
 //arquivos estaticos
 app.use(express.static('public'));
 
+//sessoes 
+app.use(session({
+    secret:'tester-programador', cookie:{maxAge:30000},//duracao da sessao do usuario, caso expire o tempo ele sera deslogado
+    resave: false, // Define como false para evitar salvar a sessão se não houver alterações
+    saveUninitialized: false // Define como false para evitar salvar sessões não inicializadas
+}))
 
 //usando rota controller
 app.use('/', categoriesController)
 app.use('/', ArticlesController)
 app.use('/', UsersController)
 
+//testando sessoes
+app.get('/session', (req, res) => {
+    req.session.teste = 'Testando sessoes'
+    res.send('Sessão gerada');
+})
+
+//pegar info da sessao
+app.get('/leitura', (req, res) => {
+    res.json({
+        teste : req.session.teste
+    })
+})
+
+app.get('/teste',(req, res) =>{
+    res.send('teste')
+})
 
 
 //trax os artigos par page home
