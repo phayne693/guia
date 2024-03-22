@@ -1,27 +1,42 @@
 <%- include ('../../partials/header.ejs') %>
-<%- include ('../../partials/navbar.ejs') %>
-<body class="bg-gray-100 ">
-    <div class="container mx-auto py-8 mt-16 w-6/12">
-        <div class="bg-white shadow-md rounded-lg overflow-hidden">
-            <div class="bg-gray-100 px-4 py-2 border-b">
-                <h2 class="text-xl font-semibold text-gray-800">Login</h2>
-            </div>
-            <div class="divide-y divide-gray-200">
-                <form method="POST" action="/authenticate" class="grid space-y-3 mt-4 p-4 shadow-xl" id="form">
-                    <label for="">Email</label>
-                    <input type="text" name="email" placeholder="Email" class="border rounded-md  p-2 focus:outline-none focus:ring focus:ring-sky-100">
+
+<body class="bg-gray-100">
+    <div class="container mx-auto py-8 mt-16 w-1/4">
+        <div class="bg-white shadow-md rounded-lg overflow-hidden container">
+
+            <div class="divide-y divide-gray-200 container">
+                <form method="POST" action="/authenticate" class="grid space-y-5 p-16 shadow-2xl justify-center m-8 rounded-md" id="form">
+                    <div class=" px-4 py-4 flex justify-center">
+                        <h2 class="text-xl font-semibold text-gray-800">BEM VINDO!</h2>
+                    </div>
+                    <!-- <label for="">Email</label> -->
+                    <div class="relative">
+                        <input type="text" name="email" placeholder="Email" class="pl-10 pr-4 py-2 border rounded-md focus:outline-none focus:ring focus:ring-sky-100">
+                        <div class="absolute inset-y-0 left-0 flex items-center pl-3">
+                            <i class="fa-solid fa-envelope" style="color: #c3c4c6;"></i>
+                        </div>
+                    </div>
                     <!-- Adicionei um id ao input de email para referenciar posteriormente -->
                     <div id="mensagem-erro-icon" style="display: none;" class="flex ml-2">
                         <i class="fa-solid fa-circle-exclamation" style="color: #f70202;"></i>
-                        <label id="mensagem-erro-email-conta"  class="text-red-600 w-6/12 ml-3 text-sm"></label>
+                        <label id="mensagem-erro-email-conta"  class="text-red-600 ml-3 text-sm"></label>
                     </div>
-                    <label for="">Password</label>
-                    <input type="password" name="password" class="border rounded-md  p-2 focus:outline-none focus:ring focus:ring-sky-100" placeholder="Password">
+                    <!-- <label for="">Password</label> -->
+                    <div class="relative">
+                        <input type="password" name="password" class="pl-10 pr-4 py-2 border rounded-md focus:outline-none focus:ring focus:ring-sky-100" placeholder="Password">
+                        <div class="absolute inset-y-0 left-0 flex items-center pl-3">
+                            <i class="fa-solid fa-lock" style="color: #c3c4c6;"></i>
+                        </div>
+                    </div>
                     <div id="mensagem-erro-icon-senha" style="display: none;" class="flex ml-2">
                         <i class="fa-solid fa-circle-exclamation" style="color: #f70202;"></i>
                         <label id="mensagem-erro-senha"  class="text-red-600 w-6/12 ml-3 text-sm"></label>
                     </div>
-                    <button class="border border-solid border-sky-700 rounded-md bg-sky-700 hover:bg-sky-600 hover:border-sky-600  w-3/12 p-2 text-white" type="submit">Login</button>
+                    <div class="text-[0.70rem] flex justify-end font-semibold"><a href="" class="hover:text-sky-600 hover:underline">Esqueci minha senha.</a></div>
+                    <button class="border border-solid border-sky-700 rounded-md bg-sky-700 hover:bg-sky-600 hover:border-sky-600 p-2 text-white" type="submit">ACESSAR</button>
+                    <div class="text-sm flex justify-center font-semibold">
+                        <span class="mt-14">Não possui conta?<a href="" class="ml-1 hover:text-sky-600 hover:underline">Registre-se</a></span>
+                    </div>
                 </form>
             </div>
         </div>
