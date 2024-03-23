@@ -34,6 +34,7 @@
                     </div>
                     <div class="text-[0.70rem] flex justify-end font-semibold"><a href="" class="hover:text-sky-600 hover:underline">Esqueci minha senha.</a></div>
                     <button class="border border-solid border-sky-700 rounded-md bg-sky-700 hover:bg-sky-600 hover:border-sky-600 p-2 text-white" type="submit">ACESSAR</button>
+                    <div id="buttonDiv"></div>
                     <div class="text-sm flex justify-center font-semibold">
                         <span class="mt-14">Não possui conta?<a href="" class="ml-1 hover:text-sky-600 hover:underline">Registre-se</a></span>
                     </div>
@@ -84,4 +85,21 @@
             console.error('Erro:', error);
         });
     });
+</script>
+<script src="https://accounts.google.com/gsi/client" async></script>
+<script>
+    function handleCredentialResponse(response) {
+      console.log("Encoded JWT ID token: " + response.credential);
+    }
+    window.onload = function () {
+      google.accounts.id.initialize({
+        client_id: "294039685303-0bris1bi38g18ur655ugrtsps11kq6jn.apps.googleusercontent.com",
+        callback: handleCredentialResponse
+      });
+      google.accounts.id.renderButton(
+        document.getElementById("buttonDiv"),
+        { theme: "outline", size: "large" }  // customization attributes
+      );
+      google.accounts.id.prompt(); // also display the One Tap dialog
+    }
 </script>
