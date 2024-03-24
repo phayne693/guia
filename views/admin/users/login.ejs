@@ -87,19 +87,34 @@
     });
 </script>
 <script src="https://accounts.google.com/gsi/client" async></script>
-<script>
+<script type="module">
     function handleCredentialResponse(response) {
-      console.log("Encoded JWT ID token: " + response.credential);
+        const data = response.credential;
+
+        //eviar o jwt para o back
+        fetch('/login/google', {
+            method: 'POST',
+            headers:{
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({data}),
+        }).then(response =>{
+            if(response.status === 200){
+                alert('Logado!')
+            }
+        }).catch(err  => { console.warn(err); });
+
     }
     window.onload = function () {
-      google.accounts.id.initialize({
-        client_id: "294039685303-0bris1bi38g18ur655ugrtsps11kq6jn.apps.googleusercontent.com",
-        callback: handleCredentialResponse
-      });
-      google.accounts.id.renderButton(
-        document.getElementById("buttonDiv"),
-        { theme: "outline", size: "large" }  // customization attributes
-      );
-      google.accounts.id.prompt(); // also display the One Tap dialog
-    }
+        google.accounts.id.initialize({
+            client_id: "294039685303-0bris1bi38g18ur655ugrtsps11kq6jn.apps.googleusercontent.com",
+            callback: handleCredentialResponse
+        });
+        google.accounts.id.renderButton(
+            document.getElementById("buttonDiv"),
+            { theme: "outline", size: "large" } // customization attributes
+        );
+        google.accounts.id.prompt(); // also display the One Tap dialog
+    };
 </script>
+

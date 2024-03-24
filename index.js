@@ -46,17 +46,17 @@ app.use('/', ArticlesController)
 app.use('/', UsersController)
 
 //testando sessoes
-app.get('/session', (req, res) => {
-    req.session.teste = 'Testando sessoes'
-    res.send('Sessão gerada');
-})
+// app.get('/session', (req, res) => {
+//     req.session.teste = 'Testando sessoes'
+//     res.send('Sessão gerada');
+// })
 
 //pegar info da sessao
-app.get('/leitura', (req, res) => {
-    res.json({
-        teste : req.session.teste
-    })
-})
+// app.get('/leitura', (req, res) => {
+//     res.json({
+//         teste : req.session.userId
+//     })
+// })
 
 app.get('/teste',(req, res) =>{
     res.send('teste')

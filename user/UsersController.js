@@ -2,10 +2,13 @@ import express from 'express';
 import { Sequelize } from 'sequelize';
 import User from './user.js';
 import bcryptjs from 'bcryptjs'
+import { jwtDecode } from 'jwt-decode';
+import adminAuth from '../middlewares/adminAuth.js'
 
 const router = express.Router();
 
 router.get('/admin/users', (req, res) => {
+   
     res.send('lista de usuarios')
 })
 
@@ -95,9 +98,10 @@ router.post('/authenticate' ,(req, res) => {
             //se as senhas forem iguais
             if(pass_correct){
                 //cria a sessão do usuario
-                req.session.userId = {
+                req.session.user = {
                     id: user.id,
-                    email: user.email
+                    email: user.email,
+                    admin: admin
                 };
             }else{
                 res.status(401).json({error: 'Senha incorreta'})
@@ -107,8 +111,62 @@ router.post('/authenticate' ,(req, res) => {
         }
     }).catch(err => {
         res.status(500).json({error: err})
-    })
-})
+    });
+});
+
+//login com google
+router.post('/login/google', (req, res) => {
+    let token = req.body;
+    let g_data = jwtDecode(token.data);
+    const name = g_data.name
+    const email = g_data.email
+    const password = g_data.sub
+    const sub = g_data.sub
+    const admin = 'false'
+    
+    User.findOne({
+        where: {
+            email: email
+        }
+    }).then(user => {
+        if(user == undefined){
+            
+            User.create({
+                name: name,
+                email: email,
+                password: password,
+                sub: sub,
+                admin: admin
+            }).then(() =>{
+                //cria sessao
+                req.session.user = {
+                    id: user.id,
+                    email: user.email,
+                    admin: user.admin
+                }
+                res.json(req.session.user)
+            }).catch(err => {
+                res.json({error: err})
+            })
+        }else if(user){
+            if(user.password === sub){
+                //cria sessao
+                req.session.user = {
+                    id: user.id,
+                    email: user.email,
+                    admin: user.admin
+                }
+                res.json(req.session.user)
+            }
+        }else{
+            res.status(422).send('Erro no servidor')
+        }
+    }).catch( err => {
+        res.status(500).json({err})
+    });
+
+});
+
 
 
 export default router;

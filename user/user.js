@@ -18,12 +18,16 @@ const User = connection.define('users',{
     },
     admin: {
         type: Sequelize.BOOLEAN, 
-        allowNull: false
+        allowNull: true
+    },
+    sub:{
+        type: Sequelize.STRING,
+        allowNull: true,
     }
 });
 
 
-//User.sync({force : true});
+// User.sync({force : true});
 
 export default User;
 
